@@ -7,18 +7,21 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
 
-  </head>
-  <body ng-app="myWtrApp">
-    <div ng-controller="calendarCtrl">
-      <h1>{{hello}}</h1>
-    </div>
-
+    <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/angular-ui-calendar/src/calendar.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.2/angular.min.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
 
     <script src="app/app.js"></script>
     <script src="app/calendar/calendarCtrl.js"></script>
-
+  </head>
+  <body ng-app="myWtrApp">
+      <div ng-controller="calendarCtrl">
+        <h1>{{hello}}</h1>
+        <input type="text" ng-model="toto"/>
+        {{toto}}
+      </div>
   </body>
-  </html>
+</html>

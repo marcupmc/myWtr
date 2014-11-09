@@ -1,7 +1,6 @@
 angular.module('myWtrApp')
-  .controller('calendarCtrl',function($scope){
+  .controller('calendarCtrl',['$scope', function($scope) {
 
-  $scope.hello={};
-  $scope.hello.toto="toto"
+    $scope.hello="Hello world";
 
-});
+}]);
