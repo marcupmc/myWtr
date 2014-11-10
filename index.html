@@ -1,24 +1,122 @@
 <html>
- <head>
-    <meta charset="utf-8">
-    <title>myWTR</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width">
+<head>
+  <meta charset="utf-8">
+  <title>myWTR</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width">
 
-    <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/angular-ui-calendar/src/calendar.js"></script>
-    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="bower_components/fullcalendar/fullcalendar.css">
 
-    <script src="app/app.js"></script>
-    <script src="app/calendar/calendarCtrl.js"></script>
-  </head>
-  <body ng-app="myWtrApp">
-      <div ng-controller="calendarCtrl">
-        <h1>{{hello}}</h1>
-        <input type="text" ng-model="toto"/>
-        {{toto}}
+  <link rel="stylesheet" href="app/app.css"/>
+  <link rel="stylesheet" href="app/calendar/calendarStyle.css"/>
+
+  <script src="bower_components/jquery/jquery.js"></script>
+  <script src="bower_components/jquery-ui/ui/jquery-ui.js"></script>
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+  <script src="bower_components/angular-ui-calendar/src/calendar.js"></script>
+  <script src="bower_components/fullcalendar/fullcalendar.js"></script>
+  <script src="bower_components/fullcalendar/gcal.js"></script>
+
+  <script src="app/app.js"></script>
+  <script src="app/calendar/calendarCtrl.js"></script>
+</head>
+<body ng-app="myWtrApp">
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">
+          <img src="" alt="logo">
+        </a>
       </div>
-  </body>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li>
+            <a href="#">Mon Activité</a>
+          </li>
+          <li>
+            <a href="#">Mes Stats</a>
+          </li>
+          <li>
+            <a href="#">Mes Documents</a>
+          </li>
+        </ul>
+      </div>
+      <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+  </nav>
+
+  <div class="container">
+    <!-- Heading Row -->
+    <div class="row calendarZone" ng-controller="calendarCtrl">
+      <div class="col-md-5">
+        <div ui-calendar="uiConfig.calendar" class="span8 calendar" ng-model="eventSources"></div>
+      </div>
+      <!-- /.col-md-8 -->
+      <div class="col-md-5">
+        <h1>Mon Activité</h1>
+        <button ng-show="!afficherFormulaireActivite" class="btn btn-primary btn-lg" ng-click="ajouterActivite()">Ajouter une activité</button>
+
+        <form ng-show="afficherFormulaireActivite"class="form-horizontal" role="form">
+          <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">Code</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="inputEmail3" placeholder="Code Projet">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <button type="submit" class="btn btn-default">Enregistrer</button>
+            </div>
+          </div>
+        </form>
+
+      </div>
+      <!-- /.col-md-4 -->
+    </div>
+    <!-- /.row -->
+    <!-- Content Row -->
+    <div class="row">
+      <div class="col-md-4">
+        <h2>Heading 1</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe rem nisi accusamus error velit animi non ipsa placeat. Recusandae, suscipit, soluta quibusdam accusamus a veniam quaerat eveniet eligendi dolor consectetur.</p>
+        <a class="btn btn-default" href="#">More Info</a>
+      </div>
+      <!-- /.col-md-4 -->
+      <div class="col-md-4">
+        <h2>Heading 2</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe rem nisi accusamus error velit animi non ipsa placeat. Recusandae, suscipit, soluta quibusdam accusamus a veniam quaerat eveniet eligendi dolor consectetur.</p>
+        <a class="btn btn-default" href="#">More Info</a>
+      </div>
+      <!-- /.col-md-4 -->
+      <div class="col-md-4">
+        <h2>Heading 3</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe rem nisi accusamus error velit animi non ipsa placeat. Recusandae, suscipit, soluta quibusdam accusamus a veniam quaerat eveniet eligendi dolor consectetur.</p>
+        <a class="btn btn-default" href="#">More Info</a>
+      </div>
+      <!-- /.col-md-4 -->
+    </div>
+    <!-- /.row -->
+    <!-- Footer -->
+    <footer>
+      <div class="row">
+        <div class="col-lg-12">
+          <p>Copyright &copy; Your Website 2014</p>
+        </div>
+      </div>
+    </footer>
+  </div>
+</body>
 </html>
