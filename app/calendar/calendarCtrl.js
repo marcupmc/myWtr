@@ -1,29 +1,21 @@
 angular.module('myWtrApp')
-  .controller('calendarCtrl',['$scope', function($scope) {
+  .controller('calendarCtrl',['$scope','CalendarService', function($scope,CalendarService) {
 
-    //Options pour le calendrier
-    $scope.events = [];
-    $scope.eventsF = function (start, end, callback) {
-      callback($scope.events);
-    };
-    $scope.eventSource={};
-    $scope.eventSources = [$scope.events, $scope.eventSource, $scope.eventsF];
+
+    $scope.eventSources = CalendarService.eventSources;
 
     $scope.afficherFormulaireActivite=false;
-
 
     $scope.ajouterActivite = function(){
       $scope.afficherFormulaireActivite=true;
     };
 
-    //TODO
     $scope.enregistrerActivite=function(){
-      $scope.events.push({
+     CalendarService.ajouterActivite({
               title: $scope.codeProjet,
               start: $scope.startDate,
               end: $scope.endDate
             });
-      //Utiliser un service d'ajout au calendrier dans service.js
     };
 
 
