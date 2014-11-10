@@ -1,7 +1,14 @@
 angular.module('myWtrApp')
   .controller('calendarCtrl',['$scope', function($scope) {
 
-    $scope.eventSources = [];
+    //Options pour le calendrier
+    $scope.events = [];
+    $scope.eventsF = function (start, end, callback) {
+      callback($scope.events);
+    };
+    $scope.eventSource={};
+    $scope.eventSources = [$scope.events, $scope.eventSource, $scope.eventsF];
+
     $scope.afficherFormulaireActivite=false;
 
 
@@ -11,12 +18,16 @@ angular.module('myWtrApp')
 
     //TODO
     $scope.enregistrerActivite=function(){
-
+      $scope.events.push({
+              title: $scope.codeProjet,
+              start: $scope.startDate,
+              end: $scope.endDate
+            });
       //Utiliser un service d'ajout au calendrier dans service.js
-    }
+    };
 
 
-    //Options pour le calendrier => a mettre dans un service?
+    //Options pour le dateTimePicker => a mettre dans un service?
     $scope.today = function() {
         $scope.dt = new Date();
     };
