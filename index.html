@@ -71,12 +71,12 @@
         <h1>Mon Activité</h1>
         <button ng-show="!afficherFormulaireActivite" class="btn btn-primary btn-lg" ng-click="ajouterActivite()">Ajouter une activité</button>
 
-        <form ng-show="afficherFormulaireActivite"class="form-horizontal" role="form">
+        <form name="formActivite" ng-show="afficherFormulaireActivite"class="form-horizontal" role="form">
           <div class="form-group">
             <div class="col-sm-4">
               <h4>Code Projet : </h4>
               <p class="input-group">
-               <input type="text" ng-model="codeProjet" class=" span4" id="inputEmail3" placeholder="Code Projet">
+               <input ng-required ="true" type="text" ng-model="codeProjet" class=" span4" id="inputEmail3" placeholder="Code Projet">
               </p>
             </div>
             <div class="col-sm-4 col-sm-offset-3" ng-show="lesCodeProjet.length>0">

@@ -18,6 +18,9 @@ angular.module('myWtrApp')
     };
 
     $scope.modifierActivite=function(){
+     if(!$scope.formActivite.$valid) {
+                return;
+      }
       CalendarService.modifierActivite({
         title: $scope.codeProjet,
         start: $scope.startDate,
@@ -35,6 +38,9 @@ angular.module('myWtrApp')
     }
 
     $scope.enregistrerActivite=function(){
+     if(!$scope.formActivite.$valid) {
+            return;
+      }
      CalendarService.ajouterActivite({
               title: $scope.codeProjet,
               start: $scope.startDate,
@@ -47,7 +53,7 @@ angular.module('myWtrApp')
     };
 
     $scope.$watch("selectedCodeProjet",function(newValue,oldValue){
-        if(newValue!=oldValue){
+        if(newValue!=oldValue && newValue){
             $scope.codeProjet=newValue.code;
         }
     });
