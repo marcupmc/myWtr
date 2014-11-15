@@ -1,5 +1,5 @@
 angular.module('myWtrApp')
-  .controller('calendarCtrl',['$scope','CalendarService', function($scope,CalendarService) {
+  .controller('calendarCtrl',['$scope','CalendarService','$rootScope', function($scope,CalendarService, $rootScope) {
 
     //TODO Afficher le recap du jour
     //TODO : debug format date
@@ -90,6 +90,7 @@ angular.module('myWtrApp')
       $scope.lesCodeProjet.push({code: $scope.codeProjet,name: $scope.codeProjet});
       $scope.idDisponible++;
       $scope.afficherFormulaireActivite=false;
+      $rootScope.$broadcast('newEvent');
       $scope.afficherAjoutActivite=true;
     };
 
