@@ -155,7 +155,7 @@ angular.module('myWtrApp')
     };
 
     $scope.toggleMin = function() {
-      $scope.minDate = $scope.minDate ? null : new Date();
+      //$scope.minDate = $scope.minDate ? null : new Date();
     };
     $scope.toggleMin();
 
