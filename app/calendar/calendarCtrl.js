@@ -1,6 +1,11 @@
 angular.module('myWtrApp')
   .controller('calendarCtrl',['$scope','CalendarService', function($scope,CalendarService) {
 
+    //TODO Supprimer une activite
+    //TODO Afficher le recap du jour
+    //TODO : debug format date
+    //TODO Mettre le TJM + le poid (0,5;1);
+
 
     $scope.eventSources = CalendarService.eventSources;
     $scope.afficherFormulaireActivite=false;
@@ -15,6 +20,7 @@ angular.module('myWtrApp')
       $scope.startDate=null;
       $scope.endDate=null;
       $scope.codeProjet="";
+      $scope.selectedCodeProjet="";
     };
 
     $scope.modifierActivite=function(){
@@ -32,6 +38,11 @@ angular.module('myWtrApp')
         $scope.lesCodeProjet.push({code: $scope.codeProjet,name: $scope.codeProjet});
       $scope.afficherFormulaireActivite=false;
     };
+
+    $scope.supprimerActivite = function(){
+        CalendarService.supprimerActivite($scope.idCourant);
+        $scope.annulerActivite();
+    }
 
     $scope.annulerActivite=function(){
         $scope.afficherFormulaireActivite=false;

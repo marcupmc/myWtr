@@ -27,6 +27,14 @@ angular.module('myWtrApp').factory('CalendarService', function () {
    eventTrouve.end=eventToUpdate.end;
   }
 
+  calendarService.supprimerActivite = function(idASupprimer){
+       angular.forEach(calendarService.events,function(value, key){
+                if(calendarService.events[key].id === idASupprimer){
+                  calendarService.events.splice(key,1);
+
+                }});
+  }
+
   return calendarService;
 
 });

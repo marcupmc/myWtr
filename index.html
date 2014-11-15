@@ -114,6 +114,7 @@
               <button ng-show="!modifierEvenement" ng-click="enregistrerActivite()" type="submit" class="btn btn-primary">Enregistrer</button>
               <button ng-show="modifierEvenement" ng-click="modifierActivite()" type="submit" class="btn btn-primary">Modifier</button>
               <a ng-click="annulerActivite()" class="btn btn-default">Annuler</a>
+              <a ng-show="modifierEvenement" ng-click="supprimerActivite()" class="btn btn-danger">Supprimer</a>
             </div>
           </div>
         </form>
