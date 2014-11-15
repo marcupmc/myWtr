@@ -111,6 +111,15 @@
             </div>
           </div>
           <div class="form-group">
+            <div class="col-sm-4">
+              <h4>TJM : </h4>
+              <p class="input-group">
+                <input ng-required ="true" type="number" ng-model='tjm'/>
+              </p>
+            </div>
+          </div>
+
+          <div class="form-group">
             <div class="col-sm-10">
               <button ng-show="!modifierEvenement" ng-click="enregistrerActivite()" type="submit" class="btn btn-primary">Enregistrer</button>
               <button ng-show="modifierEvenement" ng-click="modifierActivite()" type="submit" class="btn btn-primary">Modifier</button>
@@ -126,8 +135,8 @@
           <div class="list-group" >
             <a href="#" class="list-group-item" ng-repeat="activite in activiteDuJour">
               <h4 class="list-group-item-heading">Projet {{activite.title}}</h4>
-              <p class="list-group-item-text">TJM : </p>
-              <p class="list-group-item-text">Jours restants :  </p>
+              <p class="list-group-item-text">TJM : {{activite.tjm | currency:"€"}}</p>
+              <p class="list-group-item-text">Jours restants : {{activite.jourRestant}}  </p>
             </a>
             </div>
           <a ng-click="fermerRecapitulatif()" class="btn btn-default">Fermer</a>
