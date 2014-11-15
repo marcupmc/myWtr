@@ -35,6 +35,21 @@ angular.module('myWtrApp').factory('CalendarService', function () {
                 }});
   }
 
+  calendarService.recupererActiviteDuJour = function(date){
+    var activitesARetourner=[];
+    _.map(calendarService.events,function(unEvent){
+        //Soit le end est nul et le start est exactement egal a date
+        if(!unEvent.end && unEvent.start.getDate() == date.getDate()  ){
+            activitesARetourner.push(unEvent);
+        }
+        else if(unEvent.start<=date && unEvent.end>=date ){
+            activitesARetourner.push(unEvent);
+        }
+        //Soit le end est non nul ET la date est entre Start et End
+    });
+     return activitesARetourner;
+  }
+
   return calendarService;
 
 });

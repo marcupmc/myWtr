@@ -1,20 +1,22 @@
 angular.module('myWtrApp')
   .controller('calendarCtrl',['$scope','CalendarService','$rootScope', function($scope,CalendarService, $rootScope) {
 
-    //TODO Supprimer une activite
     //TODO Afficher le recap du jour
     //TODO : debug format date
     //TODO Mettre le TJM + le poid (0,5;1);
-
-
+    //TODO refactoring
     $scope.eventSources = CalendarService.eventSources;
+    $scope.afficherAjoutActivite=true;
     $scope.afficherFormulaireActivite=false;
-    $scope.lesCodeProjet=[];
+    $scope.afficherActiviteDuJour=false;
     $scope.modifierEvenement=false;
+    $scope.lesCodeProjet=[];
     $scope.idDisponible=0;
     $scope.idCourant;
+    $scope.activiteDuJour=[];
 
     $scope.ajouterActivite = function(){
+      $scope.afficherAjoutActivite=false;
       $scope.modifierEvenement=false;
       $scope.afficherFormulaireActivite=true;
       $scope.startDate=null;
@@ -24,6 +26,7 @@ angular.module('myWtrApp')
     };
 
     $scope.modifierActivite=function(){
+
      if(!$scope.formActivite.$valid) {
                 return;
       }
@@ -37,7 +40,26 @@ angular.module('myWtrApp')
        if(!_.findWhere($scope.lesCodeProjet,{code : $scope.codeProjet}))
         $scope.lesCodeProjet.push({code: $scope.codeProjet,name: $scope.codeProjet});
       $scope.afficherFormulaireActivite=false;
+      $scope.afficherAjoutActivite=true;
     };
+
+    $scope.afficherRecapitulatif = function(date, jsEvent, view){
+        $scope.afficherFormulaireActivite=false;
+        $scope.modifierEvenement=false;
+        $scope.afficherAjoutActivite=false;
+        $scope.activiteDuJour =CalendarService.recupererActiviteDuJour(date);
+        if($scope.activiteDuJour.length==0){
+            $scope.messageDuJour="Aucune activité n'est prévue ce jour";
+        }else{
+            $scope.messageDuJour="Voici les activités du jour :";
+        }
+        $scope.afficherActiviteDuJour=true;
+    }
+
+    $scope.fermerRecapitulatif=function(){
+        $scope.afficherActiviteDuJour=false;
+        $scope.afficherAjoutActivite=true;
+    }
 
     $scope.supprimerActivite = function(){
         CalendarService.supprimerActivite($scope.idCourant);
@@ -46,6 +68,7 @@ angular.module('myWtrApp')
 
     $scope.annulerActivite=function(){
         $scope.afficherFormulaireActivite=false;
+        $scope.afficherAjoutActivite=true;
     }
 
     $scope.enregistrerActivite=function(){
@@ -62,6 +85,7 @@ angular.module('myWtrApp')
       $scope.idDisponible++;
       $scope.afficherFormulaireActivite=false;
       $rootScope.$broadcast('newEvent');
+      $scope.afficherAjoutActivite=true;
     };
 
     $scope.$watch("selectedCodeProjet",function(newValue,oldValue){
@@ -70,11 +94,8 @@ angular.module('myWtrApp')
         }
     });
 
-    $scope.onDayClick = function( date, jsEvent, view){
-            $scope.alertMessage = (date.title + ' was clicked ');
 
-    };
-
+    //Lorsque l'on clique sur l'evenement
     $scope.onEventClick=function( date, jsEvent, view){
           $scope.startDate=date.start;
           $scope.endDate=date.end?date.end:date.start;
@@ -82,8 +103,12 @@ angular.module('myWtrApp')
           $scope.idCourant = date.id;
           $scope.modifierEvenement=true;
           $scope.afficherFormulaireActivite=true;
+          $scope.afficherAjoutActivite=false;
+          $scope.afficherActiviteDuJour=false;
     }
 
+
+    //Ca aussi faut le mettre dans le service Calendar
     $scope.uiConfig = {
           calendar:{
             //defaultView: 'agendaWeek',
@@ -101,7 +126,7 @@ angular.module('myWtrApp')
             dayNamesShort : ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"],
             monthNames: ['Janvier', 'Fevrier', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet',
              'Aout', 'Septembre', 'Octobre', 'Novembre', 'Decembre'],
-            dayClick: $scope.onDayClick,
+            dayClick: $scope.afficherRecapitulatif,
             eventClick: $scope.onEventClick,
             eventResize: $scope.alertOnResize
           }

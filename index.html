@@ -74,8 +74,9 @@
       </div>
       <div class="col-md-5">
         <h1>Mon Activité</h1>
-        <button ng-show="!afficherFormulaireActivite" class="btn btn-primary btn-lg" ng-click="ajouterActivite()">Ajouter une activité</button>
+        <button ng-show="afficherAjoutActivite" class="btn btn-primary btn-lg" ng-click="ajouterActivite()">Ajouter une activité</button>
 
+        <!-- Formulaire activite -->
         <form name="formActivite" ng-show="afficherFormulaireActivite"class="form-horizontal" role="form">
           <div class="form-group">
             <div class="col-sm-4">
@@ -124,6 +125,18 @@
           </div>
         </form>
 
+        <!-- Recapitulatif de la journee -->
+        <div ng-show="afficherActiviteDuJour">
+          <h4>{{messageDuJour}}</h4>
+          <div class="list-group" >
+            <a href="#" class="list-group-item" ng-repeat="activite in activiteDuJour">
+              <h4 class="list-group-item-heading">Projet {{activite.title}}</h4>
+              <p class="list-group-item-text">TJM : </p>
+              <p class="list-group-item-text">Jours restants :  </p>
+            </a>
+            </div>
+          <a ng-click="fermerRecapitulatif()" class="btn btn-default">Fermer</a>
+        </div>
       </div>
       <!-- /.col-md-4 -->
     </div>
