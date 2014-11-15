@@ -34,21 +34,38 @@ angular.module('myWtrApp')
         }
     });
 
+    $scope.onDayClick = function( date, jsEvent, view){
+            $scope.alertMessage = (date.title + ' was clicked ');
+
+    };
+
+    $scope.onEventClick=function( date, jsEvent, view){
+          $scope.startDate=date.start;
+          $scope.endDate=date.end?date.end:date.start;
+          $scope.codeProjet=date.title;
+          $scope.modifierEvenement=true;
+          $scope.afficherFormulaireActivite=true;
+    }
+
     $scope.uiConfig = {
           calendar:{
             //defaultView: 'agendaWeek',
             height: 450,
+            lang: 'fr',
             firstDay: 1,
             weekends:false,
             editable: true,
             header:{
               left: 'title',
-              right: 'today prev,next'
+              center: 'prev,next',
+              right:''
             },
             dayNames :["Dimanche","Lundi", "Mardi", "Mercredi", "Jeudi","Vendredi","Samedi"],
             dayNamesShort : ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"],
-            dayClick: $scope.alertEventOnClick,
-            eventDrop: $scope.alertOnDrop,
+            monthNames: ['Janvier', 'Fevrier', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet',
+             'Aout', 'Septembre', 'Octobre', 'Novembre', 'Decembre'],
+            dayClick: $scope.onDayClick,
+            eventClick: $scope.onEventClick,
             eventResize: $scope.alertOnResize
           }
         };
