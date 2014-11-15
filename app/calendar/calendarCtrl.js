@@ -5,12 +5,29 @@ angular.module('myWtrApp')
     $scope.eventSources = CalendarService.eventSources;
     $scope.afficherFormulaireActivite=false;
     $scope.lesCodeProjet=[];
+    $scope.modifierEvenement=false;
+    $scope.idDisponible=0;
+    $scope.idCourant;
 
     $scope.ajouterActivite = function(){
+      $scope.modifierEvenement=false;
       $scope.afficherFormulaireActivite=true;
       $scope.startDate=null;
       $scope.endDate=null;
       $scope.codeProjet="";
+    };
+
+    $scope.modifierActivite=function(){
+      CalendarService.modifierActivite({
+        title: $scope.codeProjet,
+        start: $scope.startDate,
+        end: $scope.endDate,
+        id : $scope.idCourant
+      });
+       //Si le nouveau codeProjet n'est pas dans la liste des codes existant on l'ajoute
+       if(!_.findWhere($scope.lesCodeProjet,{code : $scope.codeProjet}))
+        $scope.lesCodeProjet.push({code: $scope.codeProjet,name: $scope.codeProjet});
+      $scope.afficherFormulaireActivite=false;
     };
 
     $scope.annulerActivite=function(){
@@ -21,11 +38,12 @@ angular.module('myWtrApp')
      CalendarService.ajouterActivite({
               title: $scope.codeProjet,
               start: $scope.startDate,
-              end: $scope.endDate
+              end: $scope.endDate,
+              id : $scope.idDisponible
             });
       $scope.lesCodeProjet.push({code: $scope.codeProjet,name: $scope.codeProjet});
+      $scope.idDisponible++;
       $scope.afficherFormulaireActivite=false;
-
     };
 
     $scope.$watch("selectedCodeProjet",function(newValue,oldValue){
@@ -43,6 +61,7 @@ angular.module('myWtrApp')
           $scope.startDate=date.start;
           $scope.endDate=date.end?date.end:date.start;
           $scope.codeProjet=date.title;
+          $scope.idCourant = date.id;
           $scope.modifierEvenement=true;
           $scope.afficherFormulaireActivite=true;
     }
