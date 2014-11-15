@@ -70,5 +70,3 @@ angular.module('myWtrApp').factory('CalendarService', function () {
   return calendarService;
 
 });
-
-

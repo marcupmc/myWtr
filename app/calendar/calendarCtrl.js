@@ -14,6 +14,7 @@ angular.module('myWtrApp')
     $scope.tjm=0;
     $scope.activiteDuJour=[];
 
+
     $scope.ajouterActivite = function(){
       $scope.afficherAjoutActivite=false;
       $scope.modifierEvenement=false;
@@ -42,6 +43,7 @@ angular.module('myWtrApp')
         $scope.lesCodeProjet.push({code: $scope.codeProjet,name: $scope.codeProjet});
       $scope.afficherFormulaireActivite=false;
       $scope.afficherAjoutActivite=true;
+      $rootScope.$broadcast('newEvent');
     };
 
     $scope.afficherRecapitulatif = function(date, jsEvent, view){
@@ -65,6 +67,7 @@ angular.module('myWtrApp')
 
     $scope.supprimerActivite = function(){
         CalendarService.supprimerActivite($scope.idCourant);
+        $rootScope.$broadcast('newEvent');
         $scope.annulerActivite();
     }
 
@@ -97,11 +100,19 @@ angular.module('myWtrApp')
         }
     });
 
+    $scope.onResizeClick=function( date, jsEvent, view){
+      $scope.startDate=date.start;
+      $scope.endDate=date.end?date.end:date.start;
+      $scope.afficherFormulaireActivite=false;
+      $scope.afficherAjoutActivite=true;
+      $scope.afficherActiviteDuJour=false;
+      $rootScope.$broadcast('newEvent');
+    };
 
     //Lorsque l'on clique sur l'evenement
     $scope.onEventClick=function( date, jsEvent, view){
-          $scope.startDate=$filter('date')(date.start, "dd/MM/yyyy");
-          $scope.endDate=date.end?$filter('date')(date.end, "dd/MM/yyyy"):$filter('date')(date.start, "dd/MM/yyyy");
+          $scope.startDate=date.start;
+          $scope.endDate=date.end?date.end:date.start;
           $scope.codeProjet=date.title;
           $scope.idCourant = date.id;
           $scope.modifierEvenement=true;
@@ -130,8 +141,8 @@ angular.module('myWtrApp')
              'Aout', 'Septembre', 'Octobre', 'Novembre', 'Decembre'],
             dayClick: $scope.afficherRecapitulatif,
             eventClick: $scope.onEventClick,
-            eventDrop: $scope.onEventClick,
-            eventResize: $scope.onEventClick,
+            eventDrop: $scope.onResizeClick,
+            eventResize: $scope.onResizeClick,
             viewRender: $scope.renderView
           }
         };

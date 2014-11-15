@@ -20,6 +20,8 @@ function GraphCtrl($scope, CalendarService) {
             };
 
     function work (d){
+        //J'ai fait une fonction dans calendar service pour compter des jours ouvres
+        
         return d.end!== null ? dateDiff(d.start, d.end).day + 1: 1;
     }
      $scope.options2 = {
