@@ -3,6 +3,7 @@ angular.module('myWtrApp')
 
     //TODO Afficher le recap du jour
     //TODO : debug format date
+    //TODO : Debug changement de mois
     //TODO Mettre le TJM + le poid (0,5;1);
     //TODO refactoring
     $scope.eventSources = CalendarService.eventSources;
@@ -13,6 +14,7 @@ angular.module('myWtrApp')
     $scope.lesCodeProjet=[];
     $scope.idDisponible=0;
     $scope.idCourant;
+    $scope.tjm=0;
     $scope.activiteDuJour=[];
 
     $scope.ajouterActivite = function(){
@@ -22,6 +24,7 @@ angular.module('myWtrApp')
       $scope.startDate=null;
       $scope.endDate=null;
       $scope.codeProjet="";
+      $scope.tjm=0;
       $scope.selectedCodeProjet="";
     };
 
@@ -33,7 +36,8 @@ angular.module('myWtrApp')
       CalendarService.modifierActivite({
         title: $scope.codeProjet,
         start: $scope.startDate,
-        end: $scope.endDate,
+        end: $scopge.endDate,
+        tjm: $scope.tjm,
         id : $scope.idCourant
       });
        //Si le nouveau codeProjet n'est pas dans la liste des codes existant on l'ajoute
@@ -55,6 +59,7 @@ angular.module('myWtrApp')
         }
         $scope.afficherActiviteDuJour=true;
     }
+
 
     $scope.fermerRecapitulatif=function(){
         $scope.afficherActiviteDuJour=false;
@@ -79,7 +84,8 @@ angular.module('myWtrApp')
               title: $scope.codeProjet,
               start: $scope.startDate,
               end: $scope.endDate,
-              id : $scope.idDisponible
+              id : $scope.idDisponible,
+              tjm: $scope.tjm,
             });
       $scope.lesCodeProjet.push({code: $scope.codeProjet,name: $scope.codeProjet});
       $scope.idDisponible++;
@@ -108,7 +114,6 @@ angular.module('myWtrApp')
     }
 
 
-    //Ca aussi faut le mettre dans le service Calendar
     $scope.uiConfig = {
           calendar:{
             //defaultView: 'agendaWeek',
@@ -128,7 +133,8 @@ angular.module('myWtrApp')
              'Aout', 'Septembre', 'Octobre', 'Novembre', 'Decembre'],
             dayClick: $scope.afficherRecapitulatif,
             eventClick: $scope.onEventClick,
-            eventResize: $scope.alertOnResize
+            eventResize: $scope.alertOnResize,
+            viewRender: $scope.renderView
           }
         };
 
