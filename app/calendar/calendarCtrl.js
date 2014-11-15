@@ -1,10 +1,7 @@
 angular.module('myWtrApp')
-  .controller('calendarCtrl',['$scope','CalendarService','$rootScope', function($scope,CalendarService, $rootScope) {
+  .controller('calendarCtrl',['$scope','CalendarService','$rootScope','$filter', function($scope,CalendarService, $rootScope,$filter) {
 
-    //TODO Afficher le recap du jour
-    //TODO : debug format date
     //TODO : Debug changement de mois
-    //TODO Mettre le TJM + le poid (0,5;1);
     //TODO refactoring
     $scope.eventSources = CalendarService.eventSources;
     $scope.afficherAjoutActivite=true;
@@ -21,7 +18,7 @@ angular.module('myWtrApp')
       $scope.afficherAjoutActivite=false;
       $scope.modifierEvenement=false;
       $scope.afficherFormulaireActivite=true;
-      $scope.startDate=null;
+      $scope.startDate=null
       $scope.endDate=null;
       $scope.codeProjet="";
       $scope.tjm=0;
@@ -103,8 +100,8 @@ angular.module('myWtrApp')
 
     //Lorsque l'on clique sur l'evenement
     $scope.onEventClick=function( date, jsEvent, view){
-          $scope.startDate=date.start;
-          $scope.endDate=date.end?date.end:date.start;
+          $scope.startDate=$filter('date')(date.start, "dd/MM/yyyy");
+          $scope.endDate=date.end?$filter('date')(date.end, "dd/MM/yyyy"):$filter('date')(date.start, "dd/MM/yyyy");
           $scope.codeProjet=date.title;
           $scope.idCourant = date.id;
           $scope.modifierEvenement=true;
@@ -133,7 +130,8 @@ angular.module('myWtrApp')
              'Aout', 'Septembre', 'Octobre', 'Novembre', 'Decembre'],
             dayClick: $scope.afficherRecapitulatif,
             eventClick: $scope.onEventClick,
-            eventResize: $scope.alertOnResize,
+            eventDrop: $scope.onEventClick,
+            eventResize: $scope.onEventClick,
             viewRender: $scope.renderView
           }
         };
