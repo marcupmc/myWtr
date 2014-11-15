@@ -1,4 +1,5 @@
 angular.module('myWtrApp', [
   'ui.calendar',
-  'ui.bootstrap'
+  'ui.bootstrap',
+  'nvd3'
 ]);
