@@ -19,6 +19,7 @@ angular.module('myWtrApp').factory('CalendarService', function () {
     calendarService.events.push(eventToAdd);
   }
 
+
   return calendarService;
 
 });
