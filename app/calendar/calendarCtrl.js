@@ -33,7 +33,7 @@ angular.module('myWtrApp')
       CalendarService.modifierActivite({
         title: $scope.codeProjet,
         start: $scope.startDate,
-        end: $scopge.endDate,
+        end: $scope.endDate,
         tjm: $scope.tjm,
         id : $scope.idCourant
       });
