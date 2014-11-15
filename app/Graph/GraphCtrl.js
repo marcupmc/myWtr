@@ -4,7 +4,7 @@ function GraphCtrl($scope, CalendarService) {
                     type: 'pieChart',
                     height: 350,
                     x: function(d){return d.title;},
-                    y: function(d){return dateDiff(d.start, d.end).day + 1},
+                    y: function(d){return work(d)},
                     showLabels: true,
                     transitionDuration: 500,
                     labelThreshold: 0.01,
@@ -18,6 +18,10 @@ function GraphCtrl($scope, CalendarService) {
                     }
                 }
             };
+
+    function work (d){
+        return d.end!== null ? dateDiff(d.start, d.end).day + 1: 1;
+    }
      $scope.options2 = {
                 chart: {
                     type: 'pieChart',
@@ -48,7 +52,7 @@ function GraphCtrl($scope, CalendarService) {
         $scope.data = CalendarService.events;
         $scope.nbJoursTravailles = 0;
         angular.forEach($scope.data, function(e) {
-            $scope.nbJoursTravailles += dateDiff(e.start, e.end).day+1;
+            $scope.nbJoursTravailles += work(e);
         });
         $scope.data2[1].y = 20 - $scope.nbJoursTravailles;
         $scope.data2[0].y = $scope.nbJoursTravailles;
@@ -65,7 +69,6 @@ function GraphCtrl($scope, CalendarService) {
 
     ]
     $scope.data = CalendarService.events;
-    console.log($scope.data);
 
     function dateDiff(date1, date2){
         var diff = {}                           // Initialisation du retour
