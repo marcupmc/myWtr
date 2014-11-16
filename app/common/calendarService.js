@@ -9,17 +9,15 @@ angular.module('myWtrApp').factory('CalendarService', function () {
   //Config
   calendarService.eventSource={};
   calendarService.eventsF = function (start, end, callback) {
-                 callback(calendarService.events);
-               };
-
+                callback(calendarService.events);
+  };
 
   calendarService.eventSources = [calendarService.events, calendarService.eventSource, calendarService.eventsF];
 
 
-
   //Ajoute un evenement au calendrier
   calendarService.ajouterActivite=function(eventToAdd){
-    calendarService.events.push(eventToAdd);
+      calendarService.events.push(eventToAdd);
   }
 
   //Modifier un evenement du calendrier
@@ -57,7 +55,9 @@ angular.module('myWtrApp').factory('CalendarService', function () {
      return activitesARetourner;
   }
 
-  calendarService.nombreDeJoursEntreDates = function(d1, d2) {
+  calendarService.nombreDeJoursEntreDates = function(date1, date2) {
+    d1=angular.copy(date1);
+    d2=angular.copy(date2);//Fix effet de bord
      var bd= 0, dd, incr=d1.getDate();
         while(d1<d2){
             d1.setDate(++incr);
