@@ -55,10 +55,7 @@
             <a href="#">Mon Activité</a>
           </li>
           <li>
-            <a href="#">Mes Stats</a>
-          </li>
-          <li>
-            <a href="#">Mes Documents</a>
+            <a href="#statistiques">Mes Statistiques</a>
           </li>
         </ul>
       </div>
@@ -151,7 +148,7 @@
     </div>
     <!-- /.row -->
     <!-- Content Row -->
-    <div class="row" ng-controller="GraphCtrl">
+    <div id ="statistiques"class="row" ng-controller="GraphCtrl">
       <div class="col-md-4">
         <h2>Répartition du travail</h2>
           <nvd3 options="options" data="data"></nvd3>
