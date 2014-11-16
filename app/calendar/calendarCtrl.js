@@ -1,6 +1,7 @@
 angular.module('myWtrApp')
   .controller('calendarCtrl',['$scope','CalendarService','$rootScope','$filter', function($scope,CalendarService, $rootScope,$filter) {
 
+    //TODO :ne pas ajoute un evenement avec un meme nom et jour deja present
     //TODO : Debug changement de mois
     //TODO refactoring
     $scope.eventSources = CalendarService.eventSources;
@@ -52,7 +53,7 @@ angular.module('myWtrApp')
         $scope.afficherAjoutActivite=false;
         $scope.activiteDuJour =CalendarService.recupererActiviteDuJour(date);
         if($scope.activiteDuJour.length==0){
-            $scope.messageDuJour="Aucune activité n'est prévue ce jour";
+            $scope.messageDuJour="Aucune activité n'est prévue le "+$filter('date')(date, "dd/MM/yyyy");
         }else{
             $scope.messageDuJour="Voici les activités du jour :";
         }
@@ -101,8 +102,6 @@ angular.module('myWtrApp')
     });
 
     $scope.onResizeClick=function( date, jsEvent, view){
-      $scope.startDate=date.start;
-      $scope.endDate=date.end?date.end:date.start;
       $scope.afficherFormulaireActivite=false;
       $scope.afficherAjoutActivite=true;
       $scope.afficherActiviteDuJour=false;
