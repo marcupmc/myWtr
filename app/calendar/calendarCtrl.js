@@ -117,6 +117,7 @@ angular.module('myWtrApp')
       $scope.endDate=date.end?date.end:date.start;
       $scope.codeProjet=date.title;
       $scope.idCourant = date.id;
+      $scope.tjm=date.tjm;
       $scope.modifierEvenement=true;
       $scope.afficherFormulaireActivite=true;
       $scope.afficherAjoutActivite=false;
