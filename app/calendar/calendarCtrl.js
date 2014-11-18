@@ -126,7 +126,8 @@ angular.module('myWtrApp')
     $scope.uiConfig = {
       calendar:{
         //defaultView: 'agendaWeek',
-        height: 450,
+        height: 340,
+        width:400,
         lang: 'fr',
         firstDay: 1,
         weekends:false,

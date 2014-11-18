@@ -67,10 +67,10 @@
   <div class="container">
     <!-- Heading Row -->
     <div class="row calendarZone" ng-controller="calendarCtrl">
-      <div class="col-md-5">
+      <div class="col-md-4">
         <div ui-calendar="uiConfig.calendar" class="span8 calendar" ng-model="eventSources"></div>
       </div>
-      <div class="col-md-5">
+      <div class="col-md-6">
         <h1>Mon Activité</h1>
         <button ng-show="afficherAjoutActivite" class="btn btn-primary btn-lg" ng-click="ajouterActivite()">Ajouter une activité</button>
 
@@ -83,7 +83,7 @@
                <input ng-required ="true" type="text" ng-model="codeProjet" class=" span4" id="inputEmail3" placeholder="Code Projet">
               </p>
             </div>
-            <div class="col-sm-4 col-sm-offset-3" ng-show="lesCodeProjet.length>0">
+            <div class="col-sm-4 col-sm-offset-2" ng-show="lesCodeProjet.length>0">
               <h4>Codes utilisés : </h4>
               <p class="input-group">
                 <select class="span4" ng-model="selectedCodeProjet" ng-options="unCode.name for unCode in lesCodeProjet">
@@ -103,7 +103,7 @@
               </span>
               </p>
             </div>
-            <div class="col-sm-4 col-sm-offset-3">
+            <div class="col-sm-4 col-sm-offset-2">
               <h4>Fin : </h4>
               <p class="input-group">
                 <input class="span4" type="text" class="form-control" datepicker-popup="{{format}}" ng-model="endDate" is-open="openedEnd" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Fermer" />
@@ -120,14 +120,13 @@
                 <input ng-required ="true" type="number" ng-model='tjm'/>
               </p>
             </div>
-          </div>
-
-          <div class="form-group">
-            <div class="col-sm-10">
-              <button ng-show="!modifierEvenement" ng-click="enregistrerActivite()" type="submit" class="btn btn-primary">Enregistrer</button>
-              <button ng-show="modifierEvenement" ng-click="modifierActivite()" type="submit" class="btn btn-primary">Modifier</button>
-              <a ng-click="annulerActivite()" class="btn btn-default">Annuler</a>
-              <a ng-show="modifierEvenement" ng-click="supprimerActivite()" class="btn btn-danger">Supprimer</a>
+            <div class="col-sm-6" style="margin-top:35px;">
+              <p class="input-group">
+                <button ng-show="!modifierEvenement" ng-click="enregistrerActivite()" type="submit" class="btn btn-primary">Enregistrer</button>
+                <button ng-show="modifierEvenement" ng-click="modifierActivite()" type="submit" class="btn btn-primary">Modifier</button>
+                <a ng-click="annulerActivite()" class="btn btn-default">Annuler</a>
+                <a ng-show="modifierEvenement" ng-click="supprimerActivite()" class="btn btn-danger">Supprimer</a>
+              </p>
             </div>
           </div>
         </form>
@@ -151,18 +150,18 @@
     <!-- Content Row -->
     <div id ="statistiques"class="row" ng-controller="GraphCtrl">
       <div class="col-md-4">
-        <h2>Répartition du travail</h2>
+        <h4>Répartition du travail</h4>
           <nvd3 options="options" data="data"></nvd3>
         <a class="btn btn-default" href="#" ng-click="maj()">More Info</a>
       </div>
       <!-- /.col-md-4 -->
       <div class="col-md-4">
-        <h2>Cumul des jours travaillés</h2>
+        <h4>Cumul des jours travaillés</h4>
          <h1 class="text-center" style="padding-top: 90px;">{{nbJoursTravailles}} jours</h1>
       </div>
       <!-- /.col-md-4 -->
       <div class="col-md-4">
-        <h2>Staffing</h2>
+        <h4>Staffing</h4>
           <nvd3 options="options2" data="data2"></nvd3>
       </div>
       <!-- /.col-md-4 -->
