@@ -1,0 +1,180 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>myWTR</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width">
+
+  <!-- build:css css/style.css -->
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="bower_components/fullcalendar/fullcalendar.css">
+  <link rel="stylesheet" href="app/app.css"/>
+  <link rel="stylesheet" href="app/calendar/calendarStyle.css"/>
+  <link rel="stylesheet" href="bower_components/nvd3/nv.d3.css">
+  <!-- endbuild -->
+
+  <!-- build:js js/app.js -->
+  <script src="bower_components/jquery/jquery.js"></script>
+  <script src="bower_components/jquery-ui/ui/jquery-ui.js"></script>
+  <script src="bower_components/underscore/underscore.js"></script>
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+  <script src="bower_components/bootstrap/js/collapse.js"></script>
+  <script src="bower_components/angular-ui-calendar/src/calendar.js"></script>
+  <script src="bower_components/fullcalendar/fullcalendar.js"></script>
+  <script src="bower_components/fullcalendar/gcal.js"></script>
+  <script src="bower_components/d3/d3.js"></script>
+  <script src="bower_components/nvd3/nv.d3.js"></script>
+  <script src="bower_components/angular-nvd3/dist/angular-nvd3.js"></script>
+  <script src="app/app.js"></script>
+  <script src="app/common/calendarService.js"></script>
+  <script src="app/Graph/GraphCtrl.js"></script>
+  <script src="app/calendar/calendarCtrl.js"></script>
+  <!-- endbuild -->
+</head>
+<body ng-app="myWtrApp">
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">
+          <img src="resources/images/capgemini.png" alt="logo">
+        </a>
+      </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse pull-right" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li>
+            <a href="#">Mon Activité</a>
+          </li>
+          <li>
+            <a href="#statistiques">Mes Statistiques</a>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </nav>
+
+  <div class="container">
+    <!-- Heading Row -->
+    <div class="row calendarZone" ng-controller="calendarCtrl">
+      <div class="col-md-4">
+        <div ui-calendar="uiConfig.calendar" class="span8 calendar" ng-model="eventSources"></div>
+      </div>
+      <div class="col-md-6">
+        <h1>Mon Activité</h1>
+        <button ng-show="afficherAjoutActivite" class="btn btn-primary btn-lg" ng-click="ajouterActivite()">Ajouter une activité</button>
+
+        <!-- Formulaire activite -->
+        <form name="formActivite" ng-show="afficherFormulaireActivite"class="form-horizontal" role="form">
+          <div class="form-group">
+            <div class="col-sm-4">
+              <h4>Code Projet : </h4>
+              <p class="input-group">
+               <input ng-required ="true" type="text" ng-model="codeProjet" class=" span4" id="inputEmail3" placeholder="Code Projet">
+              </p>
+            </div>
+            <div class="col-sm-4 col-sm-offset-2" ng-show="lesCodeProjet.length>0">
+              <h4>Codes utilisés : </h4>
+              <p class="input-group">
+                <select class="span4" ng-model="selectedCodeProjet" ng-options="unCode.name for unCode in lesCodeProjet">
+                    <option value="">Choisir un code Projet</option>
+                </select>
+              </p>
+
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-4">
+              <h4>Début : </h4>
+              <p class="input-group">
+                <input class="span4" type="text" class="form-control" datepicker-popup="{{format}}" ng-model="startDate" is-open="openedStart" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Fermer" />
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="openStart($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+              </p>
+            </div>
+            <div class="col-sm-4 col-sm-offset-2">
+              <h4>Fin : </h4>
+              <p class="input-group">
+                <input class="span4" type="text" class="form-control" datepicker-popup="{{format}}" ng-model="endDate" is-open="openedEnd" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Fermer" />
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="openEnd($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+              </p>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-4">
+              <h4>TJM : </h4>
+              <p class="input-group">
+                <input ng-required ="true" type="number" ng-model='tjm'/>
+              </p>
+            </div>
+            <div class="col-sm-6" style="margin-top:35px;">
+              <p class="input-group">
+                <button ng-show="!modifierEvenement" ng-click="enregistrerActivite()" type="submit" class="btn btn-primary">Enregistrer</button>
+                <button ng-show="modifierEvenement" ng-click="modifierActivite()" type="submit" class="btn btn-primary">Modifier</button>
+                <a ng-click="annulerActivite()" class="btn btn-default">Annuler</a>
+                <a ng-show="modifierEvenement" ng-click="supprimerActivite()" class="btn btn-danger">Supprimer</a>
+              </p>
+            </div>
+          </div>
+        </form>
+
+        <!-- Recapitulatif de la journee -->
+        <div ng-show="afficherActiviteDuJour">
+          <h4>{{messageDuJour}}</h4>
+          <div class="list-group" >
+            <a href="#" class="list-group-item" ng-repeat="activite in activiteDuJour">
+              <h4 class="list-group-item-heading">Projet {{activite.title}}</h4>
+              <p class="list-group-item-text">TJM : {{activite.tjm | currency:"€"}}</p>
+              <p class="list-group-item-text">Jours restants : {{activite.jourRestant}}  </p>
+            </a>
+            </div>
+          <a ng-click="fermerRecapitulatif()" class="btn btn-default">Fermer</a>
+        </div>
+      </div>
+      <!-- /.col-md-4 -->
+    </div>
+    <!-- /.row -->
+    <!-- Content Row -->
+    <div id ="statistiques"class="row" ng-controller="GraphCtrl">
+      <div class="col-md-4">
+        <h4>Répartition du travail</h4>
+          <nvd3 options="options" data="data"></nvd3>
+        <a class="btn btn-default" href="#" ng-click="maj()">More Info</a>
+      </div>
+      <!-- /.col-md-4 -->
+      <div class="col-md-4">
+        <h4>Cumul des jours travaillés</h4>
+         <h1 class="text-center" style="padding-top: 90px;">{{nbJoursTravailles}} jours</h1>
+      </div>
+      <!-- /.col-md-4 -->
+      <div class="col-md-4">
+        <h4>Staffing</h4>
+          <nvd3 options="options2" data="data2"></nvd3>
+      </div>
+      <!-- /.col-md-4 -->
+    </div>
+    <!-- /.row -->
+    <!-- Footer -->
+    <footer>
+      <div class="row">
+        <div class="col-lg-12">
+          <p>&copy; MyWtr 2014</p>
+        </div>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
